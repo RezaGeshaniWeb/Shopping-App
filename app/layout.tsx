@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
+import "./globals.css";
 
 export const metadata: Metadata = {
   title: "Shopping App",
@@ -12,8 +13,10 @@ const kalameFont = localFont({
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html>
-      <body className={`${kalameFont.className} antialiased`}>{children}</body>
+    <html lang="fa" dir="rtl">
+      <body className={`${kalameFont.className} antialiased`}>
+        {children}
+      </body>
     </html>
   );
 }
