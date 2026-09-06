@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { ShoppingCart, UserIcon } from "lucide-react";
 import Link from "next/link";
+import ThemeToggle from "./ThemeToggle";
 
 export default function Header() {
     return (
@@ -13,6 +14,7 @@ export default function Header() {
                     </Link>
                 </div>
                 <div className="space-x-2">
+                    <ThemeToggle />
                     <Button asChild>
                         <Link href='/cart'>
                             <ShoppingCart />سبد خرید
