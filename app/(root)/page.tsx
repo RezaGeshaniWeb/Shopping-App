@@ -1,10 +1,10 @@
-import { Button } from "@/components/ui/button";
+import ProductList from "@/components/shared/product/ProductList";
+import data from "@/data/products";
 
 export default function Home() {
   return (
-    <div>
-      <h2>صفحه اصلی</h2>
-      <Button>دکمه</Button>
-    </div>
+    <>
+      <ProductList title="محصولات" data={data.products} />
+    </>
   );
 }
