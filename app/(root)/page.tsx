@@ -4,7 +4,7 @@ import data from "@/data/products";
 export default function Home() {
   return (
     <>
-      <ProductList title="محصولات" data={data.products} />
+      <ProductList title="محصولات" data={data.products} limit={4} />
     </>
   );
 }
