@@ -19,7 +19,7 @@ export default function ProductCard({ product }: { product: Product }) {
                     </Link>
                     <div className="flex justify-between items-center gap-4">
                         {product.stock > 0 ? (
-                            <p className="font-bold">{product.price}</p>
+                            <p className="font-bold">{product.price} تومان</p>
                         ) : (
                             <p>ناموجود</p>
                         )}
