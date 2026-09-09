@@ -3,8 +3,6 @@ import Image from "next/image";
 import Link from "next/link";
 
 export default function ProductCard({ product }: { product: any }) {
-    console.log(product);
-    
     return (
         <>
             <Card className="w-full max-w-sm">

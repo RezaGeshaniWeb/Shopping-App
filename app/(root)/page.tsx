@@ -1,10 +1,12 @@
 import ProductList from "@/components/shared/product/ProductList";
-import data from "@/data/products";
+import { getLatestProducts } from "@/lib/actions/product.actions";
 
-export default function Home() {
+export default async function Home() {
+  const latestProducts = await getLatestProducts()
+
   return (
     <>
-      <ProductList title="محصولات" data={data.products} limit={4} />
+      <ProductList title="محصولات" data={latestProducts} limit={4} />
     </>
   );
 }
