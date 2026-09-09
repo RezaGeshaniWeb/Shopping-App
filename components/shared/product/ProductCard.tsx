@@ -1,8 +1,9 @@
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
+import { Product } from "@/types";
 import Image from "next/image";
 import Link from "next/link";
 
-export default function ProductCard({ product }: { product: any }) {
+export default function ProductCard({ product }: { product: Product }) {
     return (
         <>
             <Card className="w-full max-w-sm">
