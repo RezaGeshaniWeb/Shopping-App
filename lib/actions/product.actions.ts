@@ -11,3 +11,11 @@ export async function getLatestProducts() {
 
     return convertToPlainObject(data)
 }
+
+export async function getProductBySlug(slug: string) {
+    const decodedSlug = decodeURIComponent(slug);
+
+    return await prisma.product.findFirst({
+        where: { slug: decodedSlug }
+    })
+}
