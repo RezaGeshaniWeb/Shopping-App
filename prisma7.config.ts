@@ -9,6 +9,8 @@ export default defineConfig({
     path: "prisma/migrations",
   },
   datasource: {
+    // Keep relative `file:./...` for migrate on Windows.
+    // For Studio use: npm run db:studio
     url: process.env["DATABASE_URL"],
   },
 });
