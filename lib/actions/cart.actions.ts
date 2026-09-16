@@ -5,6 +5,7 @@ import { CartItem } from "@/types";
 import { cookies } from "next/headers";
 import { prisma } from "../prisma";
 import { cartItemSchema } from "../validators";
+import { revalidatePath } from "next/cache";
 
 export async function addItemToCart(data: CartItem) {
     try {
@@ -25,6 +26,10 @@ export async function addItemToCart(data: CartItem) {
                 sessionCartId,
                 ...calcPrice([item]),
             }
+
+            await prisma.cart.create({ data: newCart })
+
+            revalidatePath(`/product/${product.slug}`)
         }
 
         return {
