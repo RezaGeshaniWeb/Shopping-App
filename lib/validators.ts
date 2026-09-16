@@ -23,3 +23,21 @@ export const signUpFormSchema = z.object({
     password: z.string(),
     confirmPassword: z.string(),
 })
+
+export const cartItemSchema = z.object({
+    productId: z.string(),
+    name: z.string(),
+    slug: z.string(),
+    qty: z.number().int(),
+    image: z.string(),
+    price: z.string(),
+})
+
+export const insertCartSchema = z.object({
+    items: z.array(cartItemSchema),
+    itemsPrice: z.string(),
+    totalPrice: z.string(),
+    shippingPrice: z.string(),
+    sessionCartId: z.string(),
+    userId: z.string().optional().nullable(),
+})
