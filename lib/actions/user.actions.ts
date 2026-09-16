@@ -1,8 +1,10 @@
 'use server'
 
 import { signIn, signOut } from "@/auth";
-import { signInFormSchema } from "../validators";
+import { signInFormSchema, signUpFormSchema } from "../validators";
 import { isRedirectError } from "next/dist/client/components/redirect-error";
+import { hashSync } from "bcryptjs";
+import { prisma } from "../prisma";
 
 export async function signInWithCredentials(prevState: unknown, formData: FormData) {
     try {
@@ -25,4 +27,36 @@ export async function signInWithCredentials(prevState: unknown, formData: FormDa
 
 export async function signOutUser() {
     await signOut();
+}
+
+export async function signUpUser(prevState: unknown, formData: FormData) {
+    try {
+        const user = signUpFormSchema.parse({
+            name: formData.get('name'),
+            email: formData.get('email'),
+            password: formData.get('password'),
+            confirmPassword: formData.get('confirmPassword'),
+        })
+
+        const plainPassword = user.password
+        user.password = hashSync(user.password, 10)
+        await prisma.user.create({
+            data: {
+                name: user.name,
+                email: user.email,
+                password: user.password,
+            }
+        })
+
+        await signIn('credentials', {
+            email: user.email,
+            password: plainPassword,
+        })
+
+        return { success: true, message: 'ثبت نام با موفقیت انجام شد' }
+    } catch (error) {
+        if (isRedirectError(error)) throw error
+
+        return { success: false, message: 'ثبت نام انجام نشد' }
+    }
 }
