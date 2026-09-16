@@ -4,6 +4,8 @@ import type { NextAuthConfig } from "next-auth";
 import { prisma } from "./lib/prisma";
 import NextAuth from "next-auth";
 import { compareSync } from "bcryptjs";
+import { cookies } from "next/headers";
+import { NextResponse } from "next/server";
 
 export const config = {
     pages: {
@@ -92,6 +94,21 @@ export const config = {
                 token.role = user.role
             }
             return token
+        },
+
+        authorized({ request, auth }: any) {
+            if (!request.cookies.get('sessionCartId')) {
+                const sessionCartId = crypto.randomUUID()
+                const newRequestHeaders = new Headers(request.headers)
+                const response = NextResponse.next({
+                    request: {
+                        headers: newRequestHeaders
+                    }
+                })
+                return response
+            } else {
+                return true
+            }
         }
     }
 } satisfies NextAuthConfig;
