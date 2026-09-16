@@ -14,7 +14,7 @@ export default function SignUpForm() {
     const searchParams = useSearchParams()
     const callbackUrl = searchParams.get('callbackUrl') || '/'
 
-    if(data && data.success) {
+    if (data && data.success) {
         router.push(callbackUrl)
     }
 
@@ -29,6 +29,10 @@ export default function SignUpForm() {
                 <div>
                     <Label className="mb-2" htmlFor="email">ایمیل</Label>
                     <Input id="email" name="email" type="email" required autoComplete="email" />
+                </div>
+                <div>
+                    <Label className="mb-2" htmlFor="mobile">موبایل</Label>
+                    <Input id="mobile" name="mobile" type="text" required />
                 </div>
                 <div>
                     <Label className="mb-2" htmlFor="password">رمز عبور</Label>

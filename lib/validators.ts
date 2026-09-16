@@ -19,6 +19,7 @@ export const signInFormSchema = z.object({
 export const signUpFormSchema = z.object({
     name: z.string(),
     email: z.string(),
+    mobile: z.string(),
     password: z.string(),
     confirmPassword: z.string(),
 })
