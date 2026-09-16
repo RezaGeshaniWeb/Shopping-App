@@ -1,6 +1,7 @@
 'use client'
 
 import { Button } from "@/components/ui/button"
+import { Card, CardContent } from "@/components/ui/card"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import { addItemToCart, removeItemFromCart } from "@/lib/actions/cart.actions"
 import { type Cart } from "@/types"
@@ -39,7 +40,6 @@ export default function CartTable({ cart }: { cart?: Cart }) {
                                                 <span className="px-2">{item.name}</span>
                                             </Link>
                                         </TableCell>
-                                        {/* <TableCell className="text-right">{item.price}</TableCell> */}
                                         <TableCell className="flex items-center gap-2">
                                             <Button variant={"outline"} type="button" onClick={async () => {
                                                 const response = await removeItemFromCart(item.productId)
@@ -60,6 +60,14 @@ export default function CartTable({ cart }: { cart?: Cart }) {
                             </TableBody>
                         </Table>
                     </div>
+                    <Card>
+                        <CardContent className="p-4 gap-4">
+                            <div className="pb-3 text-xl">
+                                مجموع قیمت: <span className="font-bold">{cart.itemsPrice}</span>
+                            </div>
+                            <Button className="w-full" onClick={() => router.push(`/shipping-address`)}>تسویه حساب</Button>
+                        </CardContent>
+                    </Card>
                 </div>
             )}
         </>
