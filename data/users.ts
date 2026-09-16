@@ -14,7 +14,7 @@ const userData = {
             email: 'user@gmail.com',
             password: hashSync('12345', 10),
             role: 'user',
-            mobile: '09934774358',
+            mobile: '09934774359',
         }
     ]
 }
