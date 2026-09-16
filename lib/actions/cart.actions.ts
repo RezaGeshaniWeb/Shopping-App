@@ -17,6 +17,15 @@ export async function addItemToCart(data: CartItem) {
         const product = await prisma.product.findFirst({
             where: { id: item.productId }
         })
+        if (!product) throw new Error('product not found.')
+        if (!cart) {
+            const newCart = {
+                userId,
+                items: [item],
+                sessionCartId,
+                ...calcPrice([item]),
+            }
+        }
 
         return {
             success: true,
@@ -46,5 +55,15 @@ export async function getMyCart() {
         itemsPrice: cart.itemsPrice.toString(),
         totalPrice: cart.totalPrice.toString(),
         shippingPrice: cart.shippingPrice.toString(),
+    }
+}
+
+function calcPrice(items: CartItem[]) {
+    const itemsPrice = items.reduce((acc, item) => acc + Number(item.price) * item.qty, 0)
+    const shippingPrice = itemsPrice > 100 ? 0 : 100
+    const totalPrice = itemsPrice + shippingPrice
+
+    return {
+        itemsPrice, shippingPrice, totalPrice
     }
 }
