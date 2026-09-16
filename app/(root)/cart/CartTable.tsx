@@ -1,6 +1,12 @@
 'use client'
 
+import { Button } from "@/components/ui/button"
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
+import { addItemToCart, removeItemFromCart } from "@/lib/actions/cart.actions"
 import { type Cart } from "@/types"
+import { Minus, Plus } from "lucide-react"
+import Image from "next/image"
+import Link from "next/link"
 import { useRouter } from "next/navigation"
 
 export default function CartTable({ cart }: { cart?: Cart }) {
@@ -15,7 +21,45 @@ export default function CartTable({ cart }: { cart?: Cart }) {
                 </div>
             ) : (
                 <div className="grid grid-cols-4 gap-5">
-                    <div className="overflow-x-auto col-span-3">جدول</div>
+                    <div className="overflow-x-auto col-span-3">
+                        <Table>
+                            <TableHeader>
+                                <TableRow>
+                                    <TableHead className="text-right">محصول</TableHead>
+                                    <TableHead className="text-right">تعداد</TableHead>
+                                    <TableHead className="text-right">قیمت</TableHead>
+                                </TableRow>
+                            </TableHeader>
+                            <TableBody>
+                                {cart.items.map((item) => (
+                                    <TableRow key={item.slug}>
+                                        <TableCell>
+                                            <Link href={`/product/${item.slug}`}>
+                                                <Image src={item.image} alt={item.name} width={50} height={50} />
+                                                <span className="px-2">{item.name}</span>
+                                            </Link>
+                                        </TableCell>
+                                        {/* <TableCell className="text-right">{item.price}</TableCell> */}
+                                        <TableCell className="flex items-center gap-2">
+                                            <Button variant={"outline"} type="button" onClick={async () => {
+                                                const response = await removeItemFromCart(item.productId)
+                                            }}>
+                                                <Minus className="w-4 h-4" />
+                                                <span>{item.qty}</span>
+                                            </Button>
+                                            <Button variant={"outline"} type="button" onClick={async () => {
+                                                const response = await addItemToCart(item)
+                                            }}>
+                                                <Plus className="w-4 h-4" />
+                                                <span>{item.qty}</span>
+                                            </Button>
+                                        </TableCell>
+                                        <TableCell className="text-right">{item.price}</TableCell>
+                                    </TableRow>
+                                ))}
+                            </TableBody>
+                        </Table>
+                    </div>
                 </div>
             )}
         </>
