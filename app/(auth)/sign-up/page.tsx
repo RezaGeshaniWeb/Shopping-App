@@ -13,7 +13,7 @@ export default async function SignUpPage(props: { searchParams: Promise<{ callba
     }
 
     return (
-        <div className="min-h-screen flex items-center justify-center">
+        <div className="min-h-screen flex items-center justify-center w-full h-full">
             <Card className="w-full max-w-md">
                 <CardHeader className="space-y-4">
                     <CardTitle className="text-center">ثبت نام</CardTitle>
