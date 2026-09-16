@@ -91,3 +91,39 @@ function calcPrice(items: CartItem[]) {
         itemsPrice, shippingPrice, totalPrice
     }
 }
+
+export async function removeItemFromCart(productId: string) {
+    try {
+        const sessionCartId = (await cookies()).get('sessionCartId')?.value
+        if (!sessionCartId) throw new Error('cart session not found')
+        const product = await prisma.product.findFirst({
+            where: { id: productId }
+        })
+        if (!product) throw new Error('product not found')
+        const cart = await getMyCart()
+        if (!cart) throw new Error('cart not found')
+        const exist = (cart.items as CartItem[]).find((p) => p.productId === productId)
+        if (!exist) throw new Error('item not found')
+        if (exist.qty === 1) {
+            cart.items = (cart.items as CartItem[]).filter((p) => p.productId !== exist.productId)
+        } else {
+            (cart.items as CartItem[]).find((p) => p.productId === productId)!.qty = exist.qty - 1
+        }
+
+        await prisma.cart.update({
+            where: { id: cart.id },
+            data: {
+                items: cart.items,
+                ...calcPrice(cart.items as CartItem[]),
+            }
+        })
+        revalidatePath(`/product/${product.slug}`)
+
+        return {
+            success: true,
+            message: 'محصول از سبد خرید حذف شد'
+        }
+    } catch (error) {
+        return { success: false }
+    }
+}
