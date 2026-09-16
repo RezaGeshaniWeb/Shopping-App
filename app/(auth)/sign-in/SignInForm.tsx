@@ -5,13 +5,18 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { signInWithCredentials } from "@/lib/actions/user.actions"
 import Link from "next/link"
+import { useSearchParams } from "next/navigation"
 import { useActionState } from "react"
 
 export default function SignInForm() {
     const [data, action] = useActionState(signInWithCredentials, { success: false, message: '' })
 
+    const searchParams = useSearchParams()
+    const callbackUrl = searchParams.get('callbackUrl') || '/'
+
     return (
         <form action={action}>
+            <input type="hidden" name="callbackUrl" value={callbackUrl} />
             <div className="space-y-6">
                 <div>
                     <Label className="mb-2" htmlFor="email">ایمیل</Label>
