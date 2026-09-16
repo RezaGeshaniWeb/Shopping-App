@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/button";
 import { ShoppingCart, UserIcon } from "lucide-react";
 import Link from "next/link";
 import ThemeToggle from "./ThemeToggle";
+import UserButton from "./UserButton";
 
 export default function Header() {
     return (
@@ -20,11 +21,7 @@ export default function Header() {
                             <ShoppingCart />سبد خرید
                         </Link>
                     </Button>
-                    <Button asChild>
-                        <Link href='/sign-in'>
-                            <UserIcon />حساب کاربری
-                        </Link>
-                    </Button>
+                    <UserButton />
                 </div>
             </div>
         </header>
