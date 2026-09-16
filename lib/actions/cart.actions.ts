@@ -26,15 +26,34 @@ export async function addItemToCart(data: CartItem) {
                 sessionCartId,
                 ...calcPrice([item]),
             }
-
             await prisma.cart.create({ data: newCart })
+            revalidatePath(`/product/${product.slug}`)
+            return {
+                success: true,
+                message: 'محصول به سبد خرید اضافه شد',
+            }
+        } else {
+            const existItem = (cart.items as CartItem[]).find((p) => p.productId === item.productId)
+            if (existItem) {
+                if (product.stock < existItem.qty + 1) {
+                    throw new Error('محصول موجود نیست')
+                }
+
+                (cart.items as CartItem[]).find((p) => p.productId === item.productId)!.qty = existItem.qty + 1
+            } else {
+                if (product.stock < 1) throw new Error('محصول موجود نیست')
+                cart.items.push(item)
+            }
+
+            await prisma.cart.update({
+                where: { id: cart.id },
+                data: {
+                    items: cart.items,
+                    ...calcPrice(cart.items as CartItem[])
+                }
+            })
 
             revalidatePath(`/product/${product.slug}`)
-        }
-
-        return {
-            success: true,
-            message: 'محصول به سبد خرید اضافه شد',
         }
     } catch (error) {
         return {
