@@ -13,7 +13,7 @@ export async function signInWithCredentials(prevState: unknown, formData: FormDa
             password: formData.get('password'),
         })
 
-        await signIn('credentials', user)
+        await signIn('email-login', user)
 
         return { success: true, message: 'ورود با موفقیت انجام شد' };
     } catch (error) {

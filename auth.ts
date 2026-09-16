@@ -18,6 +18,8 @@ export const config = {
     adapter: PrismaAdapter(prisma),
     providers: [
         CredentialsProvider({
+            id: 'email-login',
+            name: 'Email Login',
             credentials: {
                 email: { type: "email" },
                 password: { type: "password" },
@@ -42,6 +44,35 @@ export const config = {
 
                 return null;
             }
+        }),
+
+        CredentialsProvider({
+            id: 'mobile-login',
+            name: 'Mobile Login',
+            credentials: {
+                mobile: {
+                    label: 'mobile',
+                    type: 'text',
+                }
+            },
+            async authorize(credentials) {
+                if (credentials?.mobile === null) return null
+
+                const user = await prisma.user.findUnique({
+                    where: { mobile: credentials.mobile as string }
+                })
+
+                if (user) {
+                    return {
+                        id: user.id,
+                        name: user.name,
+                        email: user.email,
+                        role: user.role,
+                    }
+                }
+
+                return null
+            }
         })
     ],
     callbacks: {
@@ -57,7 +88,7 @@ export const config = {
         },
 
         async jwt({ token, user, trigger, session }: any) {
-            if(user) {
+            if (user) {
                 token.role = user.role
             }
             return token
