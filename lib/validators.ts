@@ -30,7 +30,7 @@ export const cartItemSchema = z.object({
     slug: z.string(),
     qty: z.number().int(),
     image: z.string(),
-    price: z.string(),
+    price: z.number(),
 })
 
 export const insertCartSchema = z.object({

@@ -1,3 +1,4 @@
+import AddToCart from "@/components/shared/product/AddToCart"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
@@ -48,7 +49,14 @@ export default async function ProductPage(props: { params: Promise<{ slug: strin
                                 </div>
                                 {product.stock > 0 && (
                                     <div className="flex items-center">
-                                        <Button className="w-full">افزودن به سبد خرید</Button>
+                                        <AddToCart item={{
+                                            productId: product.id,
+                                            name: product.name,
+                                            slug: product.slug,
+                                            price: product.price,
+                                            qty: 1,
+                                            image: product.image,
+                                        }} />
                                     </div>
                                 )}
                             </CardContent>
