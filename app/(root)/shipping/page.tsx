@@ -2,6 +2,8 @@ import { auth } from "@/auth"
 import { getMyCart } from "@/lib/actions/cart.actions"
 import { getUserById } from "@/lib/actions/user.actions"
 import { redirect } from "next/navigation"
+import ShippingForm from "./ShippingForm"
+import { type ShippingAddress } from "@/types"
 
 export default async function ShippingPage() {
     const cart = await getMyCart()
@@ -13,7 +15,7 @@ export default async function ShippingPage() {
 
     return (
         <div>
-            ShippingPage
+            <ShippingForm address={user?.address as ShippingAddress} />
         </div>
     )
 }
