@@ -1,4 +1,5 @@
 import z, { email } from "zod";
+import { PAYMENT_METHODS } from "./constants";
 
 export const insertProductSchema = z.object({
     name: z.string(),
@@ -48,3 +49,9 @@ export const shippingAddressSchema = z.object({
     streetAddress: z.string(),
     postalCode: z.string(),
 })
+
+export const paymentMethodSchema = z.object({ type: z.string() }).refine((data) => PAYMENT_METHODS.includes(data.type), {
+    path: ['type'],
+    message: 'Invalid payment method',
+})
+
