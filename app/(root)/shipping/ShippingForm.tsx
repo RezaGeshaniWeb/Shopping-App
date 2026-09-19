@@ -15,6 +15,7 @@ import {
     FieldGroup,
     FieldLabel,
 } from "@/components/ui/field"
+import { updateUserAddress } from "@/lib/actions/user.actions"
 
 type ShippingFormValues = z.infer<typeof shippingAddressSchema>
 
@@ -28,12 +29,13 @@ export default function ShippingForm({ address }: { address: ShippingAddress }) 
             city: address?.city || '',
             streetAddress: address?.streetAddress || '',
             postalCode: address?.postalCode || '',
-            country: address?.country || '',
         },
     })
 
-    function onSubmit(_data: ShippingFormValues) {
-
+    async function onSubmit(values: ShippingFormValues) {
+        const res = await updateUserAddress(values)
+        if (!res.success) return
+        router.push('/payment-method')
     }
 
     return (
@@ -110,25 +112,6 @@ export default function ShippingForm({ address }: { address: ShippingAddress }) 
                                     id={field.name}
                                     aria-invalid={fieldState.invalid}
                                     placeholder="کد پستی خود را وارد کنید"
-                                />
-                                {fieldState.invalid && (
-                                    <FieldError errors={[fieldState.error]} />
-                                )}
-                            </Field>
-                        )}
-                    />
-
-                    <Controller
-                        name="country"
-                        control={form.control}
-                        render={({ field, fieldState }) => (
-                            <Field data-invalid={fieldState.invalid}>
-                                <FieldLabel htmlFor={field.name}>کشور</FieldLabel>
-                                <Input
-                                    {...field}
-                                    id={field.name}
-                                    aria-invalid={fieldState.invalid}
-                                    placeholder="کشور خود را وارد کنید"
                                 />
                                 {fieldState.invalid && (
                                     <FieldError errors={[fieldState.error]} />

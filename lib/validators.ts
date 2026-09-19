@@ -47,5 +47,4 @@ export const shippingAddressSchema = z.object({
     city: z.string(),
     streetAddress: z.string(),
     postalCode: z.string(),
-    country: z.string(),
 })
