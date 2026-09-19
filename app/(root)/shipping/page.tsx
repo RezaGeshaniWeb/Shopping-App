@@ -4,6 +4,7 @@ import { getUserById } from "@/lib/actions/user.actions"
 import { redirect } from "next/navigation"
 import ShippingForm from "./ShippingForm"
 import { type ShippingAddress } from "@/types"
+import CheckoutSteps from "@/components/shared/CheckoutSteps"
 
 export default async function ShippingPage() {
     const cart = await getMyCart()
@@ -15,6 +16,7 @@ export default async function ShippingPage() {
 
     return (
         <div>
+            <CheckoutSteps current={1} />
             <ShippingForm address={user?.address as ShippingAddress} />
         </div>
     )

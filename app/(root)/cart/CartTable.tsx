@@ -65,7 +65,7 @@ export default function CartTable({ cart }: { cart?: Cart }) {
                             <div className="pb-3 text-xl">
                                 مجموع قیمت: <span className="font-bold">{cart.itemsPrice}</span>
                             </div>
-                            <Button className="w-full" onClick={() => router.push(`/shipping-address`)}>تسویه حساب</Button>
+                            <Button className="w-full" onClick={() => router.push(`/shipping`)}>تسویه حساب</Button>
                         </CardContent>
                     </Card>
                 </div>
