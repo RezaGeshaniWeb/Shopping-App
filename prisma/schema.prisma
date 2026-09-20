@@ -23,6 +23,7 @@ model Product {
   stock       Int
   price       Int
   createdAt   DateTime @default(now())
+  orderItem OrderItem[]
 }
 
 model User {
@@ -40,6 +41,7 @@ model User {
   account       Account[]
   session       Session[]
   Cart Cart[]
+  order Order[]
 }
 
 model Account {
@@ -90,4 +92,35 @@ model Cart {
   shippingPrice Int @default(0)
   createdAt DateTime @default(now())
   user User? @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model Order {
+  id String @id @default(uuid())
+  userId String @default(uuid())
+  shippingAddress Json
+  paymentMethod String
+  paymentResult Json
+  itemsPrice Int
+  shippingPrice Int
+  totalPrice Int
+  isPaid Boolean @default(false)
+  paidAt DateTime?
+  isDeliverd Boolean
+  deliverdAt DateTime?
+  createdAt DateTime
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  orderItems OrderItem[]
+}
+
+model OrderItem {
+  orderId String @default(uuid())
+  productId String @default(ulid())
+  qty Int
+  price Int
+  name String
+  slug String
+  image String
+  order Order @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  product Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+  @@id([orderId, productId])
 }
