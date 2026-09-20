@@ -1,6 +1,7 @@
 import { auth } from "@/auth"
 import CheckoutSteps from "@/components/shared/CheckoutSteps"
 import { getUserById } from "@/lib/actions/user.actions"
+import PaymentMethodForm from "./PaymentMethodForm"
 
 export default async function page() {
     const session = await auth()
@@ -11,7 +12,7 @@ export default async function page() {
     return (
         <>
             <CheckoutSteps current={2} />
-            <div>Form</div>
+            <PaymentMethodForm preferredPaymentMethod={user?.paymentMethod} />
         </>
     )
 }
