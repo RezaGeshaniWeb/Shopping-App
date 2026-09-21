@@ -9,6 +9,7 @@ import { Button } from "@/components/ui/button"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import CheckoutSteps from "@/components/shared/CheckoutSteps"
 import { type ShippingAddress } from "@/types"
+import PlaceOrderForm from "./PlaceOrderForm"
 
 export default async function PlaceOrderPage() {
     const cart = await getMyCart()
@@ -78,6 +79,7 @@ export default async function PlaceOrderPage() {
                                 <div>مجموع هزینه</div>
                                 <div>{cart.totalPrice}</div>
                             </div>
+                            <PlaceOrderForm />
                         </CardContent>
                     </Card>
                 </div>
