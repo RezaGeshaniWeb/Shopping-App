@@ -6,7 +6,7 @@ import { isRedirectError } from "next/dist/client/components/redirect-error";
 import { hashSync } from "bcryptjs";
 import { prisma } from "../prisma";
 import { type ShippingAddress } from "@/types";
-import z, { success } from "zod";
+import z from "zod";
 
 export async function signInWithCredentials(prevState: unknown, formData: FormData) {
     try {
@@ -52,7 +52,7 @@ export async function signUpUser(prevState: unknown, formData: FormData) {
             }
         })
 
-        await signIn('credentials', {
+        await signIn('email-login', {
             email: user.email,
             password: plainPassword,
         })

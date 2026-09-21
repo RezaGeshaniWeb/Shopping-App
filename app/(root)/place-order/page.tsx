@@ -5,7 +5,6 @@ import { auth } from "@/auth"
 import { getMyCart } from "@/lib/actions/cart.actions"
 import { getUserById } from "@/lib/actions/user.actions"
 import { Card, CardContent } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import CheckoutSteps from "@/components/shared/CheckoutSteps"
 import { type ShippingAddress } from "@/types"
@@ -29,7 +28,11 @@ export default async function PlaceOrderPage() {
                     <Card>
                         <CardContent className="p-4 gap-4">
                             <h2 className="text-xl pb-4">آدرس</h2>
-                            <p>{user?.paymentMethod}</p>
+                            <p>{userAddress?.fullName}</p>
+                            <p>
+                                {userAddress?.streetAddress}, {userAddress?.city}{' '}
+                                {userAddress?.postalCode}
+                            </p>
                         </CardContent>
                     </Card>
                     <Card>
@@ -44,7 +47,7 @@ export default async function PlaceOrderPage() {
                                     </TableRow>
                                 </TableHeader>
                                 <TableBody>
-                                    {cart.map((item) => (
+                                    {cart.items.map((item) => (
                                         <TableRow key={item.slug}>
                                             <TableCell className="text-right">
                                                 <Link href={`/product/${item.slug}`} className="flex items-center gap-2">
@@ -56,7 +59,7 @@ export default async function PlaceOrderPage() {
                                             </TableCell>
                                             <TableCell className="text-left">
                                                 {item.price} تومان
-                                            </TableCell> 
+                                            </TableCell>
                                         </TableRow>
                                     ))}
                                 </TableBody>

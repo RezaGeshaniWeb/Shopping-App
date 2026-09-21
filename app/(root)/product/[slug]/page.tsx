@@ -43,7 +43,7 @@ export default async function ProductPage(props: { params: Promise<{ slug: strin
                                 </div>
                                 <div className="my-4 flex justify-between">
                                     <div>وضعیت</div>
-                                    {product.price > 0 ? (
+                                    {product.stock > 0 ? (
                                         <Badge variant={"outline"}>موجود</Badge>
                                     ) : <Badge variant={"destructive"}>ناموجود</Badge>}
                                 </div>

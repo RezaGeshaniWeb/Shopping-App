@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { ShoppingCart, UserIcon } from "lucide-react";
+import { ShoppingCart } from "lucide-react";
 import Link from "next/link";
 import ThemeToggle from "./ThemeToggle";
 import UserButton from "./UserButton";

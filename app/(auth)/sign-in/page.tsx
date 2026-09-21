@@ -4,13 +4,13 @@ import SignInForm from "./SignInForm";
 import { auth } from "@/auth";
 import { redirect } from "next/navigation";
 
-export default async function SignInPage(props: { searchParams: Promise<{ callback: string }> }) {
-    const { callback } = await props.searchParams
+export default async function SignInPage(props: { searchParams: Promise<{ callbackUrl: string }> }) {
+    const { callbackUrl } = await props.searchParams
     
     const session = await auth()
 
     if (session) {
-        return redirect(callback || '/')
+        return redirect(callbackUrl || '/')
     }
 
     return (

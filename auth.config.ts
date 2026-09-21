@@ -1,6 +1,5 @@
 import type { NextAuthConfig } from "next-auth";
 import { NextResponse } from "next/server";
-import { auth } from "./auth";
 
 export default {
     pages: {
@@ -9,7 +8,7 @@ export default {
     },
     providers: [],
     callbacks: {
-        authorized({ request }: any) {
+        authorized({ request }) {
             // const protectedPaths = [
             //     /\/shipping/,
             //     /\/payment-method/,

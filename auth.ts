@@ -77,21 +77,23 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     ],
     callbacks: {
         ...authConfig.callbacks,
-        async session({ session, token, user, trigger }: any) {
-            session.user.id = token.sub;
-            session.user.role = token.role;
-
-            if (trigger === "update") {
-                session.user.name = user.name;
+        async session({ session, token, user, trigger }) {
+            if (token.sub) {
+                session.user.id = token.sub
             }
-            return session;
+            session.user.role = typeof token.role === 'string' ? token.role : 'user'
+
+            if (trigger === "update" && user?.name) {
+                session.user.name = user.name
+            }
+            return session
         },
 
-        async jwt({ token, user }: any) {
-            if (user) {
-                token.role = user.role;
+        async jwt({ token, user }) {
+            if (user && 'role' in user && typeof user.role === 'string') {
+                token.role = user.role
             }
-            return token;
+            return token
         },
     },
 });

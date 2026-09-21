@@ -1,4 +1,4 @@
-import z, { email } from "zod";
+import z from "zod";
 import { PAYMENT_METHODS } from "./constants";
 
 export const insertProductSchema = z.object({
@@ -9,7 +9,7 @@ export const insertProductSchema = z.object({
     description: z.string(),
     stock: z.number(),
     image: z.string(),
-    price: z.string()
+    price: z.number()
 })
 
 export const signInFormSchema = z.object({
@@ -71,6 +71,6 @@ export const insertOrderItemSchema = z.object({
     slug: z.string(),
     image: z.string(),
     name: z.string(),
-    price: z.string(),
+    price: z.number(),
     qty: z.number(),
 })

@@ -16,7 +16,7 @@ export default async function orderDetailsPage(props: { params: Promise<{ id: st
             totalPrice: order.totalPrice.toString(),
             orderItems: order.orderItems.map((item) => ({
                 ...item,
-                price: item.price.toString()
+                price: item.price
             })),
             user: {
                 ...order.user,

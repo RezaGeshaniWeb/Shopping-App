@@ -45,7 +45,7 @@ export default function PaymentMethodForm({ preferredPaymentMethod }: {
                             name="type"
                             render={({ field }) => (
                                 <Field className="space-y-3">
-                                    <RadioGroup onValueChange={field.onChange} className="flex flex-col space-y-2">
+                                    <RadioGroup value={field.value} onValueChange={field.onChange} className="flex flex-col space-y-2">
                                         {PAYMENT_METHODS.map((paymentMethod) => (
                                             <Field key={paymentMethod} orientation="horizontal" className="flex items-center space-x-3 space-y-0">
                                                 <RadioGroupItem value={paymentMethod} checked={field.value === paymentMethod} id={paymentMethod} />

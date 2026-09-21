@@ -20,7 +20,7 @@ export async function createOrder() {
             return {
                 success: false,
                 message: 'Cart is empty',
-                redirect: '/cart',
+                redirectTo: '/cart',
             }
         }
 
@@ -40,6 +40,9 @@ export async function createOrder() {
                     itemsPrice: parseInt(order.itemsPrice),
                     shippingPrice: parseInt(order.shippingPrice),
                     totalPrice: parseInt(order.totalPrice),
+                    paymentResult: {},
+                    isDeliverd: false,
+                    createdAt: new Date(),
                 }
             })
 

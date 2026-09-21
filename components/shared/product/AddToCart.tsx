@@ -7,11 +7,11 @@ import { Minus, Plus } from "lucide-react";
 
 export default function AddToCart({ cart, item }: { cart?: Cart; item: CartItem }) {
     async function handleAddToCart() {
-        const response = await addItemToCart(item)
+        await addItemToCart(item)
     }
 
     async function handleRemoveFromCart() {
-        const response = await removeItemFromCart(item.productId)
+        await removeItemFromCart(item.productId)
     }
 
     const existItem = cart && cart.items.find((p) => p.productId === item.productId)

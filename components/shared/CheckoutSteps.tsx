@@ -1,6 +1,6 @@
 import React from "react"
 
-export default function CheckoutSteps(current = 0) {
+export default function CheckoutSteps({ current = 0 }: { current?: number }) {
     return (
         <div className="flex justify-between items-center flex-row space-x-2 mb-10">
             {['ورود', 'آدرس سفارش', 'روش پرداخت', 'ثبت سفارش'].map((step, index) => {

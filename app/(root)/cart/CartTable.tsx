@@ -42,13 +42,13 @@ export default function CartTable({ cart }: { cart?: Cart }) {
                                         </TableCell>
                                         <TableCell className="flex items-center gap-2">
                                             <Button variant={"outline"} type="button" onClick={async () => {
-                                                const response = await removeItemFromCart(item.productId)
+                                                await removeItemFromCart(item.productId)
                                             }}>
                                                 <Minus className="w-4 h-4" />
                                                 <span>{item.qty}</span>
                                             </Button>
                                             <Button variant={"outline"} type="button" onClick={async () => {
-                                                const response = await addItemToCart(item)
+                                                await addItemToCart(item)
                                             }}>
                                                 <Plus className="w-4 h-4" />
                                                 <span>{item.qty}</span>

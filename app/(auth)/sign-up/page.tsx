@@ -3,7 +3,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { auth } from "@/auth"
 import SignUpForm from "./SignUpForm"
 
-export default async function SignUpPage(props: { searchParams: Promise<{ callback: string }> }) {
+export default async function SignUpPage(props: { searchParams: Promise<{ callbackUrl: string }> }) {
     const { callbackUrl } = await props.searchParams
 
     const session = await auth()
