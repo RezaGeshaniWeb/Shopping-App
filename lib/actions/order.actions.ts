@@ -3,6 +3,9 @@
 import { auth } from "@/auth"
 import { getMyCart } from "./cart.actions"
 import { getUserById } from "./user.actions"
+import { insertOrderSchema } from "../validators"
+import { type CartItem } from "@/types"
+import { prisma } from "../prisma"
 
 export async function createOrder() {
     try {
@@ -18,6 +21,56 @@ export async function createOrder() {
                 message: 'Cart is empty',
                 redirect: '/cart',
             }
+        }
+
+        const order = insertOrderSchema.parse({
+            userId: user?.id,
+            shippingAddress: user?.address,
+            paymentMethod: user?.paymentMethod,
+            itemsPrice: cart.itemsPrice,
+            shippingPrice: cart.shippingPrice,
+            totalPrice: cart.totalPrice,
+        })
+
+        const insertedOrderId = await prisma.$transaction(async (tx) => {
+            const insertedOrder = await tx.order.create({
+                data: {
+                    ...order,
+                    itemsPrice: parseInt(order.itemsPrice),
+                    shippingPrice: parseInt(order.shippingPrice),
+                    totalPrice: parseInt(order.totalPrice),
+                }
+            })
+
+            for (const item of cart.items as CartItem[]) {
+                await tx.orderItem.create({
+                    data: {
+                        ...item,
+                        price: item.price,
+                        orderId: insertedOrder.id,
+                    }
+                })
+            }
+
+            await tx.cart.update({
+                where: { id: cart.id },
+                data: {
+                    items: [],
+                    totalPrice: 0,
+                    shippingPrice: 0,
+                    itemsPrice: 0,
+                }
+            })
+
+            return insertedOrder.id
+        })
+
+        if (!insertedOrderId) throw new Error('order not created')
+
+        return {
+            success: true,
+            message: 'order created',
+            redirectTo: `/order/${insertedOrderId}`
         }
     } catch (error) {
         return {
